@@ -3,3 +3,6 @@ pandas
 Pillow
 arabic-reshaper
 python-bidi
+streamlit
+numpy
+matplotlib
