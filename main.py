@@ -42,15 +42,26 @@ chapter = st.sidebar.radio(
 x = int(chapter.split()[0])
 
 st.title(chapter)
-surah: dict = Surah().getSurah(x)
 
-for index, item in enumerate(surah):
+if x != 9:
     st.divider()
-    col1, col2 = st.columns([5, 2])
+    st.image("bismillah-5786134_1280.png")
+surah: dict = Surah().getSurah(x)
+for index, item in enumerate(surah):
+    if x != 1:
+        index += 1
+    if x == 1 and index == 0:
+        continue
+    st.divider()
+    col, col1, col2 = st.columns([1, 5, 2])
+    with col:
+        st.title(index)
     with col2:
-        if st.button(f"Query verse {index + 1}", key = index):
+        if st.button(f"Query verse {index}", key = index):
            st.write("Button clicked")
     with col1:
         arabic = item["Arabic"]
+        if "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" in arabic:
+            arabic = arabic.replace("بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", "").strip()
         st.title(arabic)
         st.write(item["English"])
