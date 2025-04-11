@@ -34,6 +34,7 @@ surah_list = [
     "111 Al-Masad", "112 Al-Ikhlas", "113 Al-Falaq", "114 An-Nas"
     ]
 
+# with st.sidebar.expander("Sidebar Expander"):
 chapter = st.sidebar.radio(
     label = "Select a Chapter",
     options = surah_list
@@ -53,15 +54,14 @@ for index, item in enumerate(surah):
     if x == 1 and index == 0:
         continue
     st.divider()
-    col, col1, col2 = st.columns([1, 5, 2])
+    col, col1 = st.columns([1, 5])
     with col:
         st.title(index)
-    with col2:
-        if st.button(f"Query verse {index}", key = index):
-           st.write("Button clicked")
     with col1:
         arabic = item["Arabic"]
         if "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" in arabic:
             arabic = arabic.replace("بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", "").strip()
         st.title(arabic)
-        st.write(item["English"])
+        text = item["English"]
+        more = st.expander(f"{text}")
+        more.title("More Info")
