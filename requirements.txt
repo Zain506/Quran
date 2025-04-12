@@ -7,4 +7,5 @@ streamlit
 numpy
 matplotlib
 langchain
+langchain_openai
 openai
