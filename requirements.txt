@@ -6,3 +6,5 @@ python-bidi
 streamlit
 numpy
 matplotlib
+langchain
+openai
