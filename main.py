@@ -15,14 +15,13 @@ tab_names = [
     "Qur'an",
     "Vocabulary Bank"
 ]
-chapter = st.sidebar.radio(
-        label = "Chapters",
-        options = surah_list
-        )
 
 tabs = st.tabs(tab_names)
-
+with st.sidebar:
+    expander = st.expander("Chapters")
+    chapter = expander.radio(label = "", options = surah_list)
 with tabs[0]: # Qur'an Tab
+
     x = int(chapter.split()[0])
     st.title(chapter)
     if x != 9: # Remove Bismillah from Surah Tawbah
@@ -50,3 +49,6 @@ with tabs[0]: # Qur'an Tab
             more = st.expander(f"{text}")
             # Text to display below verse
             more.write("Info will be presented in the form {root: {derivation: meaning,...},...}")
+    
+with tabs[1]:
+    st.title("Vocab Bank")
