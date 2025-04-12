@@ -17,13 +17,15 @@ tab_names = [
 ]
 
 tabs = st.tabs(tab_names)
-with st.sidebar:
-    expander = st.expander("Chapters")
-    chapter = expander.radio(label = "", options = surah_list)
-with tabs[0]: # Qur'an Tab
+    
 
-    x = int(chapter.split()[0])
-    st.title(chapter)
+with tabs[0]: # Qur'an Tab
+    col1, col2 = st.columns(2)
+    with col2:
+        chapter = st.selectbox("", surah_list)
+        x = int(chapter.split()[0])
+    with col1:
+        st.title(chapter)
     if x != 9: # Remove Bismillah from Surah Tawbah
         st.divider()
         st.image("bismillah-5786134_1280.png")
