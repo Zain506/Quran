@@ -8,12 +8,14 @@ Test by running "streamlit run main.py" in terminal to test
 import streamlit as st
 from Surah import Surah
 import json
+import pickle
+
 with open("surahList.json", "r") as file:
     surahs = json.load(file)
     surah_list = surahs["surah_list"]
 tab_names = [
     "Qur'an",
-    "Vocabulary Bank"
+    "Vocabulary"
 ]
 
 tabs = st.tabs(tab_names)
@@ -22,7 +24,7 @@ tabs = st.tabs(tab_names)
 with tabs[0]: # Qur'an Tab
     col1, col2 = st.columns(2)
     with col2:
-        chapter = st.selectbox("", surah_list)
+        chapter = st.selectbox(" ", surah_list)
         x = int(chapter.split()[0])
     with col1:
         st.title(chapter)
@@ -53,4 +55,33 @@ with tabs[0]: # Qur'an Tab
             more.write("Info will be presented in the form {root: {derivation: meaning,...},...}")
     
 with tabs[1]:
-    st.title("Vocab Bank")
+
+    st.title("Root Words")
+    
+    
+    with open("vocab.pkl", "rb") as f:
+        roots = pickle.load(f)
+    roots = sorted(roots, key = lambda x:x.arabic)
+    for root in roots:
+        st.divider()
+        col1, col2 = st.columns([1,3])
+        with col1:
+            st.title(f"{root.arabic}")
+        with col2:
+            st.write(f"{root.description}")
+            tmp = st.expander(f"Derivations")
+            a, b, c = tmp.columns(3)
+            a.subheader("Arabic")
+            b.subheader("English")
+            c.subheader("References")
+            for word in root.words.keys():
+                tmp.divider()
+                with tmp:
+                    col3, col4, col5 = st.columns([1,1, 1])
+                    with col3:
+                        st.title(f"{root.words[word].arabic}")
+                    with col4:
+                        st.write(f"{root.words[word].description}")
+                    with col5:
+                        for ref in sorted(root.words[word].references):
+                            st.write(f"{ref[0]}:{ref[1]}")
